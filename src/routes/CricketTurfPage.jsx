@@ -63,45 +63,41 @@ const CricketTurfPage = () => {
   });
 
   return (
-    <div className="lg:flex lg:flex-row mt-[70px]">
+    <div className="lg:mt-20 px-4 lg:mb-20">
       {/* Filter Component */}
-      <div className="lg:w-[200px]">
+      <div className="lg:w-[200px] lg:fixed lg:top-20">
         <SportsListFilter onFilterChange={handleFilterChange} />
       </div>
 
       {/* Turfs Display */}
-      <div className="lg:w-3/4 p-4">
-        <h1 className="text-center text-[20px] lg:text-[25px] font-bold lg:mt-4 lg:mb-4 capitalize">
+      <div className="lg:ml-[210px]">
+        <h1 className="text-center text-2xl lg:text-3xl font-semibold mb-6 capitalize">
           Cricket Turfs
         </h1>
-        <div className="grid grid-cols-2 gap-4 lg:gap-x-[200px] lg:grid-cols-3 lg:justify-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTurfs.map((turf) => (
             <div
               key={turf._id}
-              className="mt-2 mb-6 h-[250px] w-[160px] rounded-lg shadow-md shadow-black lg:h-[380px] lg:w-[320px] cursor-pointer bg-white"
+              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 cursor-pointer overflow-hidden"
               onClick={() => handleTurfClick(turf)}
             >
-              <div className="flex justify-center mt-2 lg:mt-4">
-                <img
-                  src={turf.images}
-                  alt={`${turf.name} turf img`}
-                  className="h-[100px] w-[150px] rounded-lg object-cover lg:h-[200px] lg:w-[300px]"
-                  onError={(e) => {
-                    e.target.src = "./images/placeholder.jpg"; // Placeholder image
-                  }}
-                />
-              </div>
-              <div className="pl-2 pt-1 lg:pl-4 lg:pt-2 text-center">
-                <p className="text-[14px] lg:text-[20px] capitalize font-bold">
+              <img
+                src={turf.images}
+                alt={`${turf.name} turf`}
+                className="w-full h-40 lg:h-60 object-cover"
+                onError={(e) => (e.target.src = "./images/placeholder.jpg")}
+              />
+              <div className="p-4 text-center">
+                <p className="text-lg lg:text-xl font-bold capitalize">
                   {turf.name}
                 </p>
-                <p className="text-[12px] lg:text-[16px] text-gray-600 mt-1 lg:mt-2">
+                <p className="text-gray-600 text-sm lg:text-base mt-1">
                   <strong>Location:</strong> {turf.location || "N/A"}
                 </p>
-                <p className="text-[12px] lg:text-[16px] text-gray-600 mt-1 lg:mt-2">
+                <p className="text-gray-600 text-sm lg:text-base mt-1">
                   <strong>Sport:</strong> {turf.sports_type || "N/A"}
                 </p>
-                <p className="text-[12px] lg:text-[16px] text-gray-600 mt-1 lg:mt-2">
+                <p className="text-gray-700 text-sm lg:text-base mt-2 font-semibold">
                   <strong>Price:</strong> ₹{turf.price || "N/A"} per hour
                 </p>
               </div>
