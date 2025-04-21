@@ -63,9 +63,9 @@ const CricketTurfPage = () => {
   });
 
   return (
-    <div className="lg:mt-20 px-4 lg:mb-20">
+    <div className="mt-[65px] lg:mt-20 px-4 lg:mb-20">
       {/* Filter Component */}
-      <div className="lg:w-[200px] lg:fixed lg:top-20">
+      <div className=" lg:w-[200px] lg:fixed lg:top-20">
         <SportsListFilter onFilterChange={handleFilterChange} />
       </div>
 
