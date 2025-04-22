@@ -78,7 +78,7 @@ const DisplayTurfBooking = () => {
   const handleStatusChange = async (bookingId, newStatus) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/api/v1/booking/update-booking-status/${bookingId}`,
+        `${BASE_URL}/api/v1/booking/update-booking-status/${bookingId}`,
         {
           status: newStatus,
         },

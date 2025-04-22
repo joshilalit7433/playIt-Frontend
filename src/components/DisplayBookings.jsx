@@ -118,7 +118,7 @@ function DisplayBookings() {
 
       // Send rating to backend
       const response = await axios.post(
-        `http://localhost:8000/api/v1/turf/${turfId}/rating`,
+        `${BASE_URL}/api/v1/turf/${turfId}/rating`,
         { rating: newRating, userId: user._id }
       );
 
