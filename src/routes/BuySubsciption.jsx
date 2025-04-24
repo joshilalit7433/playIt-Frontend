@@ -11,8 +11,8 @@ const BuySubscription = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const turf = location.state?.turf;
-  const { user } = useSelector((state) => state.auth);
-
+  const user = useSelector((state) => state.auth.user); // Get user data from Redux
+  const userId = user?._id; // Extract userId from Redux
   const [startDate, setStartDate] = useState(() => {
     const savedDate = localStorage.getItem("selectedStartDate");
     return savedDate ? new Date(savedDate) : new Date();
@@ -246,7 +246,7 @@ const BuySubscription = () => {
         {
           amount: totals.discounted,
           currency: "inr",
-          userId: user._id,
+          userId: userId,
         }
       );
 
