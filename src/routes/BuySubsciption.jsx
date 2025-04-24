@@ -242,7 +242,7 @@ const BuySubscription = () => {
 
       // Create payment intent
       const response = await axios.post(
-        "http://localhost:8000/api/v1/payment/post-payment",
+        `${BASE_URL}/api/v1/payment/post-payment`,
         {
           amount: totals.discounted,
           currency: "inr",
