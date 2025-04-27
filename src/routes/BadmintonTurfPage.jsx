@@ -3,12 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SportsListFilter from "../components/SportsListFilter.jsx";
 import { TURF_API_END_POINT } from "../utils/constant.js";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const BadmintonTurfPage = () => {
   const { sport } = useParams(); // sport will be "badminton" based on the routing setup
   const [turfs, setTurfs] = useState([]);
   const [filters, setFilters] = useState({ Location: "", Price: "" });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   // Function to normalize location (strip "East", "West", etc.)
   const normalizeLocation = (location) => {
@@ -18,6 +21,7 @@ const BadmintonTurfPage = () => {
   useEffect(() => {
     const fetchTurfs = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`${TURF_API_END_POINT}/getTurf`);
         // Filter only badminton turfs from the API response
         const approvedTurfs = response.data.turfs.filter(
@@ -29,6 +33,8 @@ const BadmintonTurfPage = () => {
         setTurfs(approvedTurfs);
       } catch (error) {
         console.error("Error fetching turfs:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -71,34 +77,49 @@ const BadmintonTurfPage = () => {
           Badminton Turfs
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTurfs.map((turf) => (
-            <div
-              key={turf._id}
-              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 cursor-pointer overflow-hidden"
-              onClick={() => handleTurfClick(turf)}
-            >
-              <img
-                src={turf.images}
-                alt={`${turf.name} turf`}
-                className="w-full h-40 lg:h-60 object-cover"
-                onError={(e) => (e.target.src = "./images/placeholder.jpg")}
-              />
-              <div className="p-4 text-center">
-                <p className="text-lg lg:text-xl font-bold capitalize">
-                  {turf.name}
-                </p>
-                <p className="text-gray-600 text-sm lg:text-base mt-1">
-                  <strong>Location:</strong> {turf.location || "N/A"}
-                </p>
-                <p className="text-gray-600 text-sm lg:text-base mt-1">
-                  <strong>Sport:</strong> {turf.sports_type || "N/A"}
-                </p>
-                <p className="text-gray-700 text-sm lg:text-base mt-2 font-semibold">
-                  <strong>Price:</strong> ₹{turf.price || "N/A"} per hour
-                </p>
-              </div>
-            </div>
-          ))}
+          {loading
+            ? Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden p-4"
+                >
+                  <Skeleton height={160} />
+                  <div className="mt-4">
+                    <Skeleton height={20} width="80%" />
+                    <Skeleton height={15} width="60%" className="mt-2" />
+                    <Skeleton height={15} width="70%" className="mt-2" />
+                    <Skeleton height={20} width="50%" className="mt-4" />
+                  </div>
+                </div>
+              ))
+            : filteredTurfs.map((turf) => (
+                <div
+                  key={turf._id}
+                  className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 cursor-pointer overflow-hidden"
+                  onClick={() => handleTurfClick(turf)}
+                >
+                  <img
+                    src={turf.images}
+                    alt={`${turf.name} turf`}
+                    className="w-full h-40 lg:h-60 object-cover"
+                    onError={(e) => (e.target.src = "./images/placeholder.jpg")}
+                  />
+                  <div className="p-4 text-center">
+                    <p className="text-lg lg:text-xl font-bold capitalize">
+                      {turf.name}
+                    </p>
+                    <p className="text-gray-600 text-sm lg:text-base mt-1">
+                      <strong>Location:</strong> {turf.location || "N/A"}
+                    </p>
+                    <p className="text-gray-600 text-sm lg:text-base mt-1">
+                      <strong>Sport:</strong> {turf.sports_type || "N/A"}
+                    </p>
+                    <p className="text-gray-700 text-sm lg:text-base mt-2 font-semibold">
+                      <strong>Price:</strong> ₹{turf.price || "N/A"} per hour
+                    </p>
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
     </div>
