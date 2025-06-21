@@ -24,7 +24,7 @@ This platform provides role-specific dashboards and controls for users, turf own
 | Backend       | Node.js, Express.js                                           |
 | Database      | MongoDB with Mongoose ORM                                     |
 | Auth          | JWT + Role-Based Access Control                               |
-| File Uploads  | Multer                                                        |
+| File Uploads  | Cloudinary                                                        |
 | Payments      | Stripe Integration                                            |
 | API Testing   | Postman                                                       |
 | Deployment    | Netlify (Frontend) + Render (Backend)                         |
